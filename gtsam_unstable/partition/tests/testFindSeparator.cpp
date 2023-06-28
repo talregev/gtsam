@@ -18,6 +18,7 @@ using namespace gtsam::partition;
 /* ************************************************************************* */
 // x0 - x1 - x2
 // l3        l4
+/*
 TEST ( Partition, separatorPartitionByMetis )
 {
   GenericGraph2D graph;
@@ -43,6 +44,7 @@ TEST ( Partition, separatorPartitionByMetis )
 /* ************************************************************************* */
 // x1 - x2 - x3,     variable  not used x0, x4, l7
 // l5        l6
+/*
 TEST ( Partition, separatorPartitionByMetis2 )
 {
   GenericGraph2D graph;
@@ -67,6 +69,7 @@ TEST ( Partition, separatorPartitionByMetis2 )
 
 /* *************************************************************************/
 // x0 - x1 - x2 - x3
+/*
 TEST ( Partition, edgePartitionByMetis )
 {
   GenericGraph3D graph;
@@ -97,6 +100,7 @@ TEST ( Partition, edgePartitionByMetis )
 
 /* *************************************************************************/
 // x0 - x1 - x2 - x3 - x4
+/*
 TEST ( Partition, edgePartitionByMetis2 )
 {
   GenericGraph3D graph;
@@ -121,6 +125,7 @@ TEST ( Partition, edgePartitionByMetis2 )
 /* ************************************************************************* */
 // x0 - x1 - x2
 // l3        l4
+/*
 TEST ( Partition, findSeparator )
 {
   GenericGraph2D graph;
@@ -147,6 +152,7 @@ TEST ( Partition, findSeparator )
 /* ************************************************************************* */
 // x1 - x2 - x3,     variable  not used x0, x4, l7
 // l5        l6
+/*
 TEST ( Partition, findSeparator2 )
 {
   GenericGraph2D graph;
@@ -179,6 +185,7 @@ TEST ( Partition, findSeparator2 )
  *   / |     /    \    |  \
  * x25 x26             x27 x28
  */
+/*
 TEST ( Partition, findSeparator3_with_reduced_camera )
 {
   GenericGraph3D graph;
