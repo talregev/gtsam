@@ -141,7 +141,7 @@ namespace gtsam {
     }
 
     // Chart at origin simply uses exponential map and its inverse
-    struct GTSAM_EXPORT ChartAtOrigin {
+    struct ChartAtOrigin {
       static Rot2 Retract(const Vector1& v, ChartJacobian H = {}) {
         return Expmap(v, H);
       }
