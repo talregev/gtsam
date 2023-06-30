@@ -82,7 +82,7 @@ using Weights = Eigen::Matrix<double, 1, -1>; /* 1xN vector */
  * @ingroup basis
  */
 template <size_t M>
-Matrix kroneckerProductIdentity(const Weights& w) {
+GTSAM_EXPORT Matrix kroneckerProductIdentity(const Weights& w) {
   Matrix result(M, w.cols() * M);
   result.setZero();
 
