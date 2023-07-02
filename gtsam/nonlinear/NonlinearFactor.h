@@ -636,7 +636,7 @@ protected:
    * as separate arguments.
    * @param[out] H The Jacobian with respect to each variable (optional).
    */
-  virtual Vector evaluateError(const ValueTypes&... x,
+  inline virtual Vector evaluateError(const ValueTypes&... x,
                                OptionalMatrixTypeT<ValueTypes>... H) const = 0;
 
   /** If all the optional arguments are matrices then redirect the call to 
@@ -646,7 +646,7 @@ protected:
    * public:
    *   using NoiseModelFactorN<list the value types here>::evaluateError;
    */
-  Vector evaluateError(const ValueTypes&... x, MatrixTypeT<ValueTypes>&... H) const {
+  inline Vector evaluateError(const ValueTypes&... x, MatrixTypeT<ValueTypes>&... H) const {
     return evaluateError(x..., (&H)...);
   }
 
