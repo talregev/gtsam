@@ -120,7 +120,7 @@ jobs:
           cmake --build build -j4 --config ${{ matrix.build_type }} --target check.inference
 
           :: Compile. Fail with exception
-          :: cmake --build build -j4 --config ${{ matrix.build_type }} --target check.linear
+          cmake --build build -j4 --config ${{ matrix.build_type }} --target check.linear
           
           cmake --build build -j4 --config ${{ matrix.build_type }} --target check.navigation          
           cmake --build build -j4 --config ${{ matrix.build_type }} --target check.sam
@@ -128,10 +128,10 @@ jobs:
           cmake --build build -j4 --config ${{ matrix.build_type }} --target check.symbolic
 
           :: Compile. Fail with exception
-          :: cmake --build build -j4 --config ${{ matrix.build_type }} --target check.hybrid
+          cmake --build build -j4 --config ${{ matrix.build_type }} --target check.hybrid
 
           :: Compile. Fail with exception
-          :: cmake --build build -j4 --config ${{ matrix.build_type }} --target check.nonlinear
+          cmake --build build -j4 --config ${{ matrix.build_type }} --target check.nonlinear
 
           :: Compilation error
           :: cmake --build build -j4 --config ${{ matrix.build_type }} --target check.slam
@@ -141,19 +141,19 @@ jobs:
           cmake --build build -j4 --config ${{ matrix.build_type }} --target check.base_unstable
 
           :: Compile. Fail with exception
-          :: cmake --build build -j4 --config ${{ matrix.build_type }} --target check.geometry_unstable
+          cmake --build build -j4 --config ${{ matrix.build_type }} --target check.geometry_unstable
 
           :: Compile. Fail with exception
-          :: cmake --build build -j4 --config ${{ matrix.build_type }} --target check.linear_unstable
+          cmake --build build -j4 --config ${{ matrix.build_type }} --target check.linear_unstable
 
           :: Compile. Fail with exception
-          :: cmake --build build -j4 --config ${{ matrix.build_type }} --target check.discrete_unstable
+          cmake --build build -j4 --config ${{ matrix.build_type }} --target check.discrete_unstable
 
           :: Compile. Fail with exception
-          :: cmake --build build -j4 --config ${{ matrix.build_type }} --target check.dynamics_unstable
+          cmake --build build -j4 --config ${{ matrix.build_type }} --target check.dynamics_unstable
 
           :: Compile. Fail with exception
-          :: cmake --build build -j4 --config ${{ matrix.build_type }} --target check.nonlinear_unstable
+          cmake --build build -j4 --config ${{ matrix.build_type }} --target check.nonlinear_unstable
 
           :: Compilation error
           :: cmake --build build -j4 --config ${{ matrix.build_type }} --target check.slam_unstable
