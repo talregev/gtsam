@@ -40,6 +40,8 @@ if(MSVC)
   set(CMAKE_STATIC_LINKER_FLAGS ${MSVC_LINKER_FLAGS})
 endif()
 
+ADD_DEFINITIONS(-D_DEBUG)
+
 set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH}" "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(GtsamMakeConfigFile)
 include(GNUInstallDirs)
