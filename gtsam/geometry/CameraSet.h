@@ -138,8 +138,7 @@ class CameraSet : public std::vector<CAMERA, Eigen::aligned_allocator<CAMERA>> {
    * Use SFINAE to resolve overload ambiguity.
    */
   template <class POINT, class... OptArgs>
-  typename std::enable_if<(sizeof...(OptArgs) != 0), ZVector>::type project2(
-      const POINT& point, OptArgs&... args) const {
+  ZVector project2(const POINT& point, OptArgs&... args) const {
     // pass it to the pointer version of the function
     return project2(point, (&args)...);
   }

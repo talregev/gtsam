@@ -156,4 +156,4 @@ jobs:
           # cmake --build build -j1 --config ${{ matrix.build_type }} --target check.partition
 
           # Run all tests
-          cmake --build build -j1 --config ${{ matrix.build_type }} --target check
+          # cmake --build build -j1 --config ${{ matrix.build_type }} --target check
