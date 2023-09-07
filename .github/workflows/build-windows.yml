@@ -6,7 +6,7 @@ on: [pull_request]
 # and start a new one. The other runner will be available more quickly to your PR. 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -156,4 +156,4 @@ jobs:
           # cmake --build build -j1 --config ${{ matrix.build_type }} --target check.partition
 
           # Run all tests
-          # cmake --build build -j1 --config ${{ matrix.build_type }} --target check
+          cmake --build build -j1 --config ${{ matrix.build_type }} --target check
