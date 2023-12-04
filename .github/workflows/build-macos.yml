@@ -47,5 +47,9 @@ jobs:
           sudo xcode-select -switch /Applications/Xcode.app
           echo "CC=clang" >> $GITHUB_ENV
           echo "CXX=clang++" >> $GITHUB_ENV
+
+      - name: Build examples
+        run: bash .github/scripts/unix.sh -b
+
       - name: Build and Test
         run: bash .github/scripts/unix.sh -t
