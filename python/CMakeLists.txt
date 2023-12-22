@@ -1,3 +1,4 @@
+cmake_policy(SET CMP0057 NEW)
 set(PROJECT_PYTHON_SOURCE_DIR ${PROJECT_SOURCE_DIR}/python)
 set(GTSAM_PYTHON_BUILD_DIRECTORY ${PROJECT_BINARY_DIR}/python)
 
@@ -26,7 +27,6 @@ include(PybindWrap)
 
 # This is required to avoid an error in modern pybind11 cmake scripts:
 # if(POLICY CMP0057)
-  cmake_policy(SET CMP0057 NEW)
 # endif()
 
 # Prefer system pybind11 first, if not found, rely on bundled version:
