@@ -64,7 +64,7 @@ jobs:
           :: C:\ProgramData\chocolatey\bin\python3.11.exe -m pip install pyparsing
           python --version
           python -m pip --version
-          python -m pip install pyparsing
+          python -m pip install -r python/dev_requirements.txt
 
 
       - name: Install ninja
@@ -104,7 +104,7 @@ jobs:
               -DGTSAM_BUILD_EXAMPLES_ALWAYS=OFF ^
               -DGTSAM_ROT3_EXPMAP=ON ^
               -DGTSAM_POSE3_EXPMAP=ON ^
-              -DGTSAM_BUILD_PYTHON=OFF ^
+              -DGTSAM_BUILD_PYTHON=ON ^
               -DGTSAM_BUILD_TESTS=ON ^
               -DGTSAM_BUILD_UNSTABLE=OFF ^
               -DGTSAM_USE_SYSTEM_EIGEN=ON ^
@@ -124,6 +124,13 @@ jobs:
         shell: cmd
         run: |
           cmake --build build --config Release -j 2
+
+      - name: Run Python tests
+        if: success() 
+        shell: cmd
+        run: |
+          cmake --build build --target python-install
+          cmake --build build --target python-test
 
       - name: Run tests
         if: success() 
