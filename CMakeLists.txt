@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-
+cmake_policy(SET CMP0057 NEW)
 # Set the version number for the library
 set (GTSAM_VERSION_MAJOR 4)
 set (GTSAM_VERSION_MINOR 3)
