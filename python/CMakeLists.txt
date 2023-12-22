@@ -23,16 +23,11 @@ include(PybindWrap)
 
 # Load the pybind11 code
 
-
-# This is required to avoid an error in modern pybind11 cmake scripts:
-# if(POLICY CMP0057)
-# endif()
-
 # Prefer system pybind11 first, if not found, rely on bundled version:
 find_package(pybind11 CONFIG REQUIRED)
-# if (NOT pybind11_FOUND)
-#         add_subdirectory(${PROJECT_SOURCE_DIR}/wrap/pybind11 pybind11)
-# endif()
+if (NOT pybind11_FOUND)
+        add_subdirectory(${PROJECT_SOURCE_DIR}/wrap/pybind11 pybind11)
+endif()
 
 # Set the wrapping script variable
 set(PYBIND_WRAP_SCRIPT "${PROJECT_SOURCE_DIR}/wrap/scripts/pybind_wrap.py")
