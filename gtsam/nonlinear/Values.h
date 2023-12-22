@@ -72,7 +72,7 @@ namespace gtsam {
     // concurrency).
     typedef internal::FastDefaultAllocator<typename std::pair<const Key, void*>>::type KeyValuePtrPairAllocator;
     using KeyValueMap =
-        std::map<Key, std::unique_ptr<Value>, std::less<Key>,
+        GTSAM_EXPORT std::map<Key, std::unique_ptr<Value>, std::less<Key>,
                  std::allocator<std::pair<const Key, std::unique_ptr<Value>>>>;
 
     // The member to store the values, see just above
