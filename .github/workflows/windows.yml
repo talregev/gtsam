@@ -131,6 +131,7 @@ jobs:
         shell: cmd
         run: |
           cmake --build build --target python-install
+          dir/w build\python\gtsam\
           cmake --build build --target python-test
 
       - name: Run tests
