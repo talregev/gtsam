@@ -99,7 +99,7 @@ jobs:
               -DVCPKG_MANIFEST_DIR=%VCPKG_CONFIGS%\manifest ^
               -DVCPKG_INSTALLED_DIR=%VCPKG_ROOT%\installed ^
               -DVCPKG_OVERLAY_TRIPLETS=%VCPKG_CONFIGS%\triplets ^
-              -DVCPKG_TARGET_TRIPLET=x64-windows ^
+              -DVCPKG_TARGET_TRIPLET=x64-windows-release ^
               -DVCPKG_INSTALL_OPTIONS=--clean-after-build ^
               -DGTSAM_BUILD_EXAMPLES_ALWAYS=OFF ^
               -DGTSAM_ROT3_EXPMAP=ON ^
