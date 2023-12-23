@@ -101,6 +101,7 @@ jobs:
               -DVCPKG_OVERLAY_TRIPLETS=%VCPKG_CONFIGS%\triplets ^
               -DVCPKG_TARGET_TRIPLET=x64-windows-release ^
               -DVCPKG_INSTALL_OPTIONS=--clean-after-build ^
+              -DCMAKE_BUILD_TYPE=Release ^
               -DGTSAM_BUILD_EXAMPLES_ALWAYS=OFF ^
               -DGTSAM_ROT3_EXPMAP=ON ^
               -DGTSAM_POSE3_EXPMAP=ON ^
