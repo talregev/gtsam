@@ -15,7 +15,7 @@ namespace gtsam {
  */
 struct GTSAM_EXPORT RedirectCout {
   /// constructor -- redirect stdout buffer to a stringstream buffer
-  RedirectCout() : ssBuffer_(), coutBuffer_(std::cout.rdbuf(ssBuffer_.rdbuf())) {}
+  RedirectCout() : ssBuffer_(new std::stringstream()), coutBuffer_(std::cout.rdbuf(ssBuffer_->rdbuf())) {}
 
   /// return the string
   std::string str() const;
@@ -24,7 +24,7 @@ struct GTSAM_EXPORT RedirectCout {
   ~RedirectCout();
 
 private:
-  std::stringstream ssBuffer_;
+  std::stringstream* ssBuffer_;
   std::streambuf* coutBuffer_;
 };
 

@@ -3,11 +3,12 @@
 namespace gtsam {
 
 std::string RedirectCout::str() const {
-  return ssBuffer_.str();
+  return ssBuffer_->str();
 }
 
 RedirectCout::~RedirectCout() {
   std::cout.rdbuf(coutBuffer_);
+  delete ssBuffer_;
 }
 
 }
