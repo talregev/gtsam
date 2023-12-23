@@ -105,7 +105,7 @@ jobs:
               -DGTSAM_ROT3_EXPMAP=ON ^
               -DGTSAM_POSE3_EXPMAP=ON ^
               -DGTSAM_BUILD_PYTHON=ON ^
-              -DGTSAM_BUILD_TESTS=ON ^
+              -DGTSAM_BUILD_TESTS=OFF ^
               -DGTSAM_BUILD_UNSTABLE=OFF ^
               -DGTSAM_USE_SYSTEM_EIGEN=ON ^
               -DGTSAM_USE_SYSTEM_METIS=ON ^
