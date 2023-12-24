@@ -41,7 +41,7 @@
 
 namespace gtsam {
 /// Define collection type:
-typedef FastVector<FactorIndex> FactorIndices;
+using FactorIndices = FastVector<FactorIndex>;
 
 // Forward declarations
 template <class CLIQUE>
@@ -57,17 +57,15 @@ class HybridValues;
 template <class FACTOR>
 class FactorGraph {
  public:
-  typedef FACTOR FactorType;  ///< factor type
-  typedef std::shared_ptr<FACTOR>
-      sharedFactor;  ///< Shared pointer to a factor
-  typedef sharedFactor value_type;
-  typedef typename FastVector<sharedFactor>::iterator iterator;
-  typedef typename FastVector<sharedFactor>::const_iterator const_iterator;
+  using FactorType = FACTOR;  ///< factor type
+  using sharedFactor = std::shared_ptr<FACTOR>;  ///< Shared pointer to a factor
+  using value_type = sharedFactor;
+  using iterator = typename FastVector<sharedFactor>::iterator;
+  using const_iterator = typename FastVector<sharedFactor>::const_iterator;
 
  private:
-  typedef FactorGraph<FACTOR> This;  ///< Typedef for this class
-  typedef std::shared_ptr<This>
-      shared_ptr;  ///< Shared pointer for this class
+  using This = FactorGraph<FACTOR>;  ///< Typedef for this class
+  using shared_ptr = std::shared_ptr<This>;  ///< Shared pointer for this class
 
   /// Check if a DERIVEDFACTOR is in fact derived from FactorType.
   template <typename DERIVEDFACTOR>

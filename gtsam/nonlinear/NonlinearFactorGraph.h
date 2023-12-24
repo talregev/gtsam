@@ -56,9 +56,9 @@ namespace gtsam {
 
   public:
 
-    typedef FactorGraph<NonlinearFactor> Base;
-    typedef NonlinearFactorGraph This;
-    typedef std::shared_ptr<This> shared_ptr;
+    using Base = FactorGraph<NonlinearFactor>;
+    using This = NonlinearFactorGraph;
+    using shared_ptr = std::shared_ptr<This>;
 
     /// @name Standard Constructors
     /// @{
@@ -130,7 +130,7 @@ namespace gtsam {
     std::shared_ptr<GaussianFactorGraph> linearize(const Values& linearizationPoint) const;
 
     /// typdef for dampen functions used below
-    typedef std::function<void(const std::shared_ptr<HessianFactor>& hessianFactor)> Dampen;
+    using Dampen = std::function<void(const std::shared_ptr<HessianFactor>& hessianFactor)>;
 
     /**
      * Instead of producing a GaussianFactorGraph, pre-allocate and linearize directly
