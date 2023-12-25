@@ -84,7 +84,7 @@ public:
 };
 
 /// Thread-safe runtime error exception
-class GTSAM_EXPORT RuntimeErrorThreadsafe: public ThreadsafeException<RuntimeErrorThreadsafe> {
+class RuntimeErrorThreadsafe: public ThreadsafeException<RuntimeErrorThreadsafe> {
 public:
   /// Construct with a string describing the exception
   RuntimeErrorThreadsafe(const std::string& description) :
@@ -96,7 +96,7 @@ public:
 class OutOfRangeThreadsafe: public ThreadsafeException<OutOfRangeThreadsafe> {
 public:
   /// Construct with a string describing the exception
-  OutOfRangeThreadsafe(const std::string& description) :
+  GTSAM_EXPORT OutOfRangeThreadsafe(const std::string& description) :
       ThreadsafeException<OutOfRangeThreadsafe>(description) {
   }
 };

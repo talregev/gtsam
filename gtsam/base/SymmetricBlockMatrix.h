@@ -50,7 +50,7 @@ namespace gtsam {
   * (except re-setting firstBlock()).
   *
   * @ingroup base */
-  class GTSAM_EXPORT SymmetricBlockMatrix
+  class SymmetricBlockMatrix
   {
   public:
     typedef SymmetricBlockMatrix This;
@@ -65,7 +65,7 @@ namespace gtsam {
 
   public:
     /// Construct from an empty matrix (asserts that the matrix is empty)
-    SymmetricBlockMatrix();
+    GTSAM_EXPORT SymmetricBlockMatrix();
 
     /// Construct from a container of the sizes of each block.
     template<typename CONTAINER>
@@ -105,24 +105,24 @@ namespace gtsam {
     /// Copy the block structure, but do not copy the matrix data.  If blockStart() has been
     /// modified, this copies the structure of the corresponding matrix view. In the destination
     /// SymmetricBlockMatrix, blockStart() will be 0.
-    static SymmetricBlockMatrix LikeActiveViewOf(const SymmetricBlockMatrix& other);
+    GTSAM_EXPORT static SymmetricBlockMatrix LikeActiveViewOf(const SymmetricBlockMatrix& other);
 
     /// Copy the block structure, but do not copy the matrix data. If blockStart() has been
     /// modified, this copies the structure of the corresponding matrix view. In the destination
     /// SymmetricBlockMatrix, blockStart() will be 0.
-    static SymmetricBlockMatrix LikeActiveViewOf(const VerticalBlockMatrix& other);
+    GTSAM_EXPORT static SymmetricBlockMatrix LikeActiveViewOf(const VerticalBlockMatrix& other);
 
     /// Row size
-    DenseIndex rows() const { assertInvariants(); return variableColOffsets_.back() - variableColOffsets_[blockStart_]; }
+    GTSAM_EXPORT DenseIndex rows() const { assertInvariants(); return variableColOffsets_.back() - variableColOffsets_[blockStart_]; }
 
     /// Column size
-    DenseIndex cols() const { return rows(); }
+    GTSAM_EXPORT DenseIndex cols() const { return rows(); }
 
     /// Block count
-    DenseIndex nBlocks() const { return nActualBlocks() - blockStart_; }
+    GTSAM_EXPORT DenseIndex nBlocks() const { return nActualBlocks() - blockStart_; }
 
     /// Number of dimensions for variable on this diagonal block.
-    DenseIndex getDim(DenseIndex block) const {
+    GTSAM_EXPORT DenseIndex getDim(DenseIndex block) const {
       return calcIndices(block, block, 1, 1)[2];
     }
 
@@ -131,45 +131,45 @@ namespace gtsam {
 
     /// Get a copy of a block (anywhere in the matrix).
     /// This method makes a copy - use the methods below if performance is critical.
-    Matrix block(DenseIndex I, DenseIndex J) const;
+    GTSAM_EXPORT Matrix block(DenseIndex I, DenseIndex J) const;
 
     /// Return the J'th diagonal block as a self adjoint view.
-    Eigen::SelfAdjointView<Block, Eigen::Upper> diagonalBlock(DenseIndex J) {
+    GTSAM_EXPORT Eigen::SelfAdjointView<Block, Eigen::Upper> diagonalBlock(DenseIndex J) {
       return block_(J, J).selfadjointView<Eigen::Upper>();
     }
 
     /// Return the J'th diagonal block as a self adjoint view.
-    Eigen::SelfAdjointView<constBlock, Eigen::Upper> diagonalBlock(DenseIndex J) const {
+    GTSAM_EXPORT Eigen::SelfAdjointView<constBlock, Eigen::Upper> diagonalBlock(DenseIndex J) const {
       return block_(J, J).selfadjointView<Eigen::Upper>();
     }
 
     /// Get the diagonal of the J'th diagonal block.
-    Vector diagonal(DenseIndex J) const {
+    GTSAM_EXPORT Vector diagonal(DenseIndex J) const {
       return block_(J, J).diagonal();
     }
 
     /// Get block above the diagonal (I, J).
-    constBlock aboveDiagonalBlock(DenseIndex I, DenseIndex J) const {
+    GTSAM_EXPORT constBlock aboveDiagonalBlock(DenseIndex I, DenseIndex J) const {
       assert(I < J);
       return block_(I, J);
     }
 
     /// Return the square sub-matrix that contains blocks(i:j, i:j).
-    Eigen::SelfAdjointView<constBlock, Eigen::Upper> selfadjointView(
+    GTSAM_EXPORT Eigen::SelfAdjointView<constBlock, Eigen::Upper> selfadjointView(
         DenseIndex I, DenseIndex J) const {
       assert(J > I);
       return block_(I, I, J - I, J - I).selfadjointView<Eigen::Upper>();
     }
 
     /// Return the square sub-matrix that contains blocks(i:j, i:j) as a triangular view.
-    Eigen::TriangularView<constBlock, Eigen::Upper> triangularView(DenseIndex I,
+    GTSAM_EXPORT Eigen::TriangularView<constBlock, Eigen::Upper> triangularView(DenseIndex I,
                                                                    DenseIndex J) const {
       assert(J > I);
       return block_(I, I, J - I, J - I).triangularView<Eigen::Upper>();
     }
 
     /// Get a range [i,j) from the matrix. Indices are in block units.
-    constBlock aboveDiagonalRange(DenseIndex i_startBlock,
+    GTSAM_EXPORT constBlock aboveDiagonalRange(DenseIndex i_startBlock,
                                   DenseIndex i_endBlock,
                                   DenseIndex j_startBlock,
                                   DenseIndex j_endBlock) const {
@@ -180,7 +180,7 @@ namespace gtsam {
     }
 
     /// Get a range [i,j) from the matrix. Indices are in block units.
-    Block aboveDiagonalRange(DenseIndex i_startBlock, DenseIndex i_endBlock,
+    GTSAM_EXPORT Block aboveDiagonalRange(DenseIndex i_startBlock, DenseIndex i_endBlock,
                              DenseIndex j_startBlock, DenseIndex j_endBlock) {
       assert(i_startBlock < j_startBlock);
       assert(i_endBlock <= j_startBlock);
@@ -241,12 +241,12 @@ namespace gtsam {
     /// @{
 
     /// Get self adjoint view.
-    Eigen::SelfAdjointView<Block, Eigen::Upper> selfadjointView() {
+    GTSAM_EXPORT Eigen::SelfAdjointView<Block, Eigen::Upper> selfadjointView() {
       return full().selfadjointView<Eigen::Upper>();
     }
 
     /// Get self adjoint view.
-    Eigen::SelfAdjointView<constBlock, Eigen::Upper> selfadjointView() const {
+    GTSAM_EXPORT Eigen::SelfAdjointView<constBlock, Eigen::Upper> selfadjointView() const {
       return full().selfadjointView<Eigen::Upper>();
     }
 
@@ -257,26 +257,26 @@ namespace gtsam {
     }
 
     /// Set the entire active matrix zero.
-    void setZero() {
+    GTSAM_EXPORT void setZero() {
       full().triangularView<Eigen::Upper>().setZero();
     }
 
     /// Negate the entire active matrix.
-    void negate();
+    GTSAM_EXPORT void negate();
 
     /// Invert the entire active matrix in place.
-    void invertInPlace();
+    GTSAM_EXPORT void invertInPlace();
 
     /// @}
 
     /// Retrieve or modify the first logical block, i.e. the block referenced by block index 0.
     /// Blocks before it will be inaccessible, except by accessing the underlying matrix using
     /// matrix().
-    DenseIndex& blockStart() { return blockStart_; }
+    GTSAM_EXPORT DenseIndex& blockStart() { return blockStart_; }
 
     /// Retrieve the first logical block, i.e. the block referenced by block index 0. Blocks before
     /// it will be inaccessible, except by accessing the underlying matrix using matrix().
-    DenseIndex blockStart() const { return blockStart_; }
+    GTSAM_EXPORT DenseIndex blockStart() const { return blockStart_; }
 
     /**
      * Given the augmented Hessian [A1'A1 A1'A2 A1'b
@@ -288,14 +288,14 @@ namespace gtsam {
      *   L'L is the augmented Hessian on the the separator x2
      * R and Sd can be interpreted as a GaussianConditional |R*x1 + S*x2 - d]^2
      */
-    void choleskyPartial(DenseIndex nFrontals);
+    GTSAM_EXPORT void choleskyPartial(DenseIndex nFrontals);
 
     /**
      * After partial Cholesky, we can optionally split off R and Sd, to be interpreted as
      * a GaussianConditional |R*x1 + S*x2 - d]^2. We leave the symmetric lower block L in place,
      * and adjust block_start so now *this refers to it.
      */
-    VerticalBlockMatrix split(DenseIndex nFrontals);
+    GTSAM_EXPORT VerticalBlockMatrix split(DenseIndex nFrontals);
 
   protected:
 

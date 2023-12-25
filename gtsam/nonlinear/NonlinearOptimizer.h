@@ -72,7 +72,7 @@ Values result = DoglegOptimizer(graph, initialValues, params).optimize();
  *
  * For more flexibility you may override virtual methods in your own derived class.
  */
-class GTSAM_EXPORT NonlinearOptimizer {
+class NonlinearOptimizer {
 
 protected:
   NonlinearFactorGraph graph_; ///< The graph with nonlinear factors
@@ -95,7 +95,7 @@ public:
    * process, you may call iterate() and check_convergence() yourself, and if
    * needed modify the optimization state between iterations.
    */
-  virtual const Values& optimize() { defaultOptimize(); return values(); }
+  GTSAM_EXPORT virtual const Values& optimize() { defaultOptimize(); return values(); }
 
   /**
    * Optimize, but return empty result if any uncaught exception is thrown
@@ -103,19 +103,19 @@ public:
    * No message is printed: it is up to the caller to check the result
    * @param optimizer a non-linear optimizer
    */
-  const Values& optimizeSafely();
+  GTSAM_EXPORT const Values& optimizeSafely();
 
   /// return error in current optimizer state
-  double error() const;
+  GTSAM_EXPORT double error() const;
 
   /// return number of iterations in current optimizer state
-  size_t iterations() const;
+  GTSAM_EXPORT size_t iterations() const;
 
   /// return values in current optimizer state
-  const Values &values() const;
+  GTSAM_EXPORT const Values &values() const;
 
   /// return the graph with nonlinear factors
-  const NonlinearFactorGraph &graph() const { return graph_; }
+  GTSAM_EXPORT const NonlinearFactorGraph &graph() const { return graph_; }
 
   /// @}
 
@@ -123,17 +123,17 @@ public:
   /// @{
 
   /** Virtual destructor */
-  virtual ~NonlinearOptimizer();
+  GTSAM_EXPORT virtual ~NonlinearOptimizer();
 
   /** Default function to do linear solve, i.e. optimize a GaussianFactorGraph */
-  virtual VectorValues solve(const GaussianFactorGraph &gfg,
+  GTSAM_EXPORT virtual VectorValues solve(const GaussianFactorGraph &gfg,
       const NonlinearOptimizerParams& params) const;
 
   /** 
    * Perform a single iteration, returning GaussianFactorGraph corresponding to 
    * the linearized factor graph.
    */
-  virtual GaussianFactorGraph::shared_ptr iterate() = 0;
+  GTSAM_EXPORT virtual GaussianFactorGraph::shared_ptr iterate() = 0;
 
   /// @}
 

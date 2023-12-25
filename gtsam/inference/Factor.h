@@ -33,8 +33,8 @@
 namespace gtsam {
 
   /// Define collection types:
-  typedef FastVector<FactorIndex> FactorIndices;
-  typedef FastSet<FactorIndex> FactorIndexSet;
+  using FactorIndices = FastVector<FactorIndex>;
+  using FactorIndexSet = FastSet<FactorIndex>;
 
   class HybridValues; // forward declaration of a Value type for error.
 
@@ -71,15 +71,15 @@ namespace gtsam {
 
   private:
     // These typedefs are private because they must be overridden in derived classes.
-    typedef Factor This; ///< This class
-    typedef std::shared_ptr<Factor> shared_ptr; ///< A shared_ptr to this class.
+    using This = Factor; ///< This class
+    using shared_ptr = std::shared_ptr<Factor>; ///< A shared_ptr to this class.
 
   public:
     /// Iterator over keys
-    typedef KeyVector::iterator iterator;
+    using iterator = KeyVector::iterator;
 
     /// Const iterator over keys
-    typedef KeyVector::const_iterator const_iterator;
+    using const_iterator = KeyVector::const_iterator;
 
   protected:
 

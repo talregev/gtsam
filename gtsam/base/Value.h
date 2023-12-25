@@ -36,30 +36,30 @@ namespace gtsam {
    * See https://bitbucket.org/gtborg/gtsam/wiki/Migrating%20from%20GTSAM%203.X%20to%20GTSAM%204.0#markdown-header-custom-value-types
    * for current usage and migration details.
    */
-  class GTSAM_EXPORT Value {
+  class Value {
   public:
 
     /** Clone this value in a special memory pool, must be deleted with Value::deallocate_, *not* with the 'delete' operator. */
-    virtual Value* clone_() const = 0;
+    GTSAM_EXPORT virtual Value* clone_() const = 0;
 
     /** Deallocate a raw pointer of this value */
-    virtual void deallocate_() const = 0;
+    GTSAM_EXPORT virtual void deallocate_() const = 0;
 
     /** Clone this value (normal clone on the heap, delete with 'delete' operator) */
-    virtual std::shared_ptr<Value> clone() const = 0;
+    GTSAM_EXPORT virtual std::shared_ptr<Value> clone() const = 0;
 
     /** Compare this Value with another for equality. */
-    virtual bool equals_(const Value& other, double tol = 1e-9) const = 0;
+    GTSAM_EXPORT virtual bool equals_(const Value& other, double tol = 1e-9) const = 0;
 
     /** Print this value, for debugging and unit tests */
-    virtual void print(const std::string& str = "") const = 0;
+    GTSAM_EXPORT virtual void print(const std::string& str = "") const = 0;
 
     /** Return the dimensionality of the tangent space of this value.  This is
      * the dimensionality of \c delta passed into retract() and of the vector
      * returned by localCoordinates().
      * @return The dimensionality of the tangent space
      */
-    virtual size_t dim() const = 0;
+    GTSAM_EXPORT virtual size_t dim() const = 0;
 
     /** Increment the value, by mapping from the vector delta in the tangent
      * space of the current value back to the manifold to produce a new,
@@ -67,7 +67,7 @@ namespace gtsam {
      * @param delta The delta vector in the tangent space of this value, by
      * which to increment this value.
      */
-    virtual Value* retract_(const Vector& delta) const = 0;
+    GTSAM_EXPORT virtual Value* retract_(const Vector& delta) const = 0;
 
     /** Compute the coordinates in the tangent space of this value that
      * retract() would map to \c value.
@@ -75,10 +75,10 @@ namespace gtsam {
      * tangent space of the value on which this function is called.
      * @return The coordinates of \c value in the tangent space of \c this.
      */
-    virtual Vector localCoordinates_(const Value& value) const = 0;
+    GTSAM_EXPORT virtual Vector localCoordinates_(const Value& value) const = 0;
 
     /** Assignment operator */
-    virtual Value& operator=(const Value& /*rhs*/) {
+    GTSAM_EXPORT virtual Value& operator=(const Value& /*rhs*/) {
       //needs a empty definition so recursion in implicit derived assignment operators work
      return *this;
     }
@@ -88,7 +88,7 @@ namespace gtsam {
     const ValueType& cast() const;
 
     /** Virutal destructor */
-    virtual ~Value() {}
+    GTSAM_EXPORT virtual ~Value() {}
 
   private:
     /** Empty serialization function.

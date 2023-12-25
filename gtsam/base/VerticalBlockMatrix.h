@@ -39,7 +39,7 @@ namespace gtsam {
    * the matrix (i.e. one after the last true row index).
    *
    * @ingroup base */
-  class GTSAM_EXPORT VerticalBlockMatrix
+  class VerticalBlockMatrix
   {
   public:
     typedef VerticalBlockMatrix This;
@@ -57,7 +57,7 @@ namespace gtsam {
   public:
 
     /** Construct an empty VerticalBlockMatrix */
-    VerticalBlockMatrix() :
+    GTSAM_EXPORT VerticalBlockMatrix() :
       rowStart_(0), rowEnd_(0), blockStart_(0)
     {
       variableColOffsets_.push_back(0);
@@ -104,30 +104,30 @@ namespace gtsam {
     *  the corresponding matrix view. In the destination VerticalBlockView, blockStart() and
     *  rowStart() will thus be 0, rowEnd() will be cols() of the source VerticalBlockView, and the
     *  underlying matrix will be the size of the view of the source matrix.  */
-    static VerticalBlockMatrix LikeActiveViewOf(const VerticalBlockMatrix& rhs);
+    GTSAM_EXPORT static VerticalBlockMatrix LikeActiveViewOf(const VerticalBlockMatrix& rhs);
 
     /** Copy the block structure, but do not copy the matrix data. If blockStart() has been
     *   modified, this copies the structure of the corresponding matrix view. In the destination
     *   VerticalBlockMatrix, blockStart() will be 0. */
-    static VerticalBlockMatrix LikeActiveViewOf(const SymmetricBlockMatrix& rhs, DenseIndex height);
+    GTSAM_EXPORT static VerticalBlockMatrix LikeActiveViewOf(const SymmetricBlockMatrix& rhs, DenseIndex height);
 
     /// Row size
-    DenseIndex rows() const { assertInvariants(); return rowEnd_ - rowStart_; }
+    GTSAM_EXPORT DenseIndex rows() const { assertInvariants(); return rowEnd_ - rowStart_; }
 
     /// Column size
-    DenseIndex cols() const { assertInvariants(); return variableColOffsets_.back() - variableColOffsets_[blockStart_]; }
+    GTSAM_EXPORT DenseIndex cols() const { assertInvariants(); return variableColOffsets_.back() - variableColOffsets_[blockStart_]; }
 
     /// Block count
-    DenseIndex nBlocks() const { assertInvariants(); return variableColOffsets_.size() - 1 - blockStart_; }
+    GTSAM_EXPORT DenseIndex nBlocks() const { assertInvariants(); return variableColOffsets_.size() - 1 - blockStart_; }
 
     /** Access a single block in the underlying matrix with read/write access */
-    Block operator()(DenseIndex block) { return range(block, block+1); }
+    GTSAM_EXPORT Block operator()(DenseIndex block) { return range(block, block+1); }
 
     /** Access a const block view */
-    const constBlock operator()(DenseIndex block) const { return range(block, block+1); }
+    GTSAM_EXPORT const constBlock operator()(DenseIndex block) const { return range(block, block+1); }
 
     /** access ranges of blocks at a time */
-    Block range(DenseIndex startBlock, DenseIndex endBlock) {
+    GTSAM_EXPORT Block range(DenseIndex startBlock, DenseIndex endBlock) {
       assertInvariants();
       DenseIndex actualStartBlock = startBlock + blockStart_;
       DenseIndex actualEndBlock = endBlock + blockStart_;
@@ -140,7 +140,7 @@ namespace gtsam {
       return matrix_.block(rowStart_, startCol, this->rows(), rangeCols);
     }
 
-    const constBlock range(DenseIndex startBlock, DenseIndex endBlock) const {
+    GTSAM_EXPORT const constBlock range(DenseIndex startBlock, DenseIndex endBlock) const {
       assertInvariants();
       DenseIndex actualStartBlock = startBlock + blockStart_;
       DenseIndex actualEndBlock = endBlock + blockStart_;
@@ -154,12 +154,12 @@ namespace gtsam {
     }
 
     /** Return the full matrix, *not* including any portions excluded by rowStart(), rowEnd(), and firstBlock() */
-    Block full() { return range(0, nBlocks()); }
+    GTSAM_EXPORT Block full() { return range(0, nBlocks()); }
 
     /** Return the full matrix, *not* including any portions excluded by rowStart(), rowEnd(), and firstBlock() */
-    const constBlock full() const { return range(0, nBlocks()); }
+    GTSAM_EXPORT const constBlock full() const { return range(0, nBlocks()); }
 
-    DenseIndex offset(DenseIndex block) const {
+    GTSAM_EXPORT DenseIndex offset(DenseIndex block) const {
       assertInvariants();
       DenseIndex actualBlock = block + blockStart_;
       checkBlock(actualBlock);
@@ -167,28 +167,28 @@ namespace gtsam {
     }
 
     /** Get the apparent first row of the underlying matrix for all operations */
-    const DenseIndex& rowStart() const { return rowStart_; }
+    GTSAM_EXPORT const DenseIndex& rowStart() const { return rowStart_; }
 
     /** Get or set the apparent first row of the underlying matrix for all operations */
-    DenseIndex& rowStart() { return rowStart_; }
+    GTSAM_EXPORT DenseIndex& rowStart() { return rowStart_; }
 
     /** Get the apparent last row (exclusive, i.e. rows() == rowEnd() - rowStart()) of the underlying matrix for all operations */
-    const DenseIndex& rowEnd() const { return rowEnd_; }
+    GTSAM_EXPORT const DenseIndex& rowEnd() const { return rowEnd_; }
 
     /** Get or set the apparent last row (exclusive, i.e. rows() == rowEnd() - rowStart()) of the underlying matrix for all operations */
-    DenseIndex& rowEnd() { return rowEnd_; }
+    GTSAM_EXPORT DenseIndex& rowEnd() { return rowEnd_; }
 
     /** Get the apparent first block for all operations */
-    const DenseIndex& firstBlock() const { return blockStart_; }
+    GTSAM_EXPORT const DenseIndex& firstBlock() const { return blockStart_; }
 
     /** Get or set the apparent first block for all operations */
-    DenseIndex& firstBlock() { return blockStart_; }
+    GTSAM_EXPORT DenseIndex& firstBlock() { return blockStart_; }
 
     /** Access to full matrix (*including* any portions excluded by rowStart(), rowEnd(), and firstBlock()) */
-    const Matrix& matrix() const { return matrix_; }
+    GTSAM_EXPORT const Matrix& matrix() const { return matrix_; }
 
     /** Non-const access to full matrix (*including* any portions excluded by rowStart(), rowEnd(), and firstBlock()) */
-    Matrix& matrix() { return matrix_; }
+    GTSAM_EXPORT Matrix& matrix() { return matrix_; }
 
   protected:
     void assertInvariants() const {

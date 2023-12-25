@@ -65,7 +65,7 @@ using OptionalMatrixVecType = std::vector<Matrix>*;
  *
  * \nosubgrouping
  */
-class GTSAM_EXPORT NonlinearFactor: public Factor {
+class NonlinearFactor: public Factor {
 
 protected:
 
@@ -81,7 +81,7 @@ public:
   /// @{
 
   /** Default constructor for I/O only */
-  NonlinearFactor() {}
+  GTSAM_EXPORT NonlinearFactor() {}
 
   /**
    * Constructor from a collection of the keys involved in this factor
@@ -95,11 +95,11 @@ public:
   /// @{
 
   /** print */
-  void print(const std::string& s = "", const KeyFormatter& keyFormatter =
+  GTSAM_EXPORT void print(const std::string& s = "", const KeyFormatter& keyFormatter =
                                             DefaultKeyFormatter) const override;
 
   /** Check if two factors are equal */
-  virtual bool equals(const NonlinearFactor& f, double tol = 1e-9) const;
+  GTSAM_EXPORT virtual bool equals(const NonlinearFactor& f, double tol = 1e-9) const;
 
   /// @}
   /// @name Standard Interface
@@ -117,16 +117,16 @@ public:
    * and calculates the error by asking the user to implement the method
    * \code double evaluateError(const Values& c) const \endcode.
    */
-  virtual double error(const Values& c) const;
+  GTSAM_EXPORT virtual double error(const Values& c) const;
 
   /**
    * The Factor::error simply extracts the \class Values from the
    * \class HybridValues and calculates the error.
    */
-  double error(const HybridValues& c) const override;
+  GTSAM_EXPORT double error(const HybridValues& c) const override;
 
   /** get the dimension of the factor (number of rows on linearization) */
-  virtual size_t dim() const = 0;
+  GTSAM_EXPORT virtual size_t dim() const = 0;
 
   /**
    * Checks whether a factor should be used based on a set of values.
@@ -138,10 +138,10 @@ public:
    * when the constraint is *NOT* fulfilled.
    * @return true if the constraint is active
    */
-  virtual bool active(const Values& /*c*/) const { return true; }
+  GTSAM_EXPORT virtual bool active(const Values& /*c*/) const { return true; }
 
   /** linearize to a GaussianFactor */
-  virtual std::shared_ptr<GaussianFactor>
+  GTSAM_EXPORT virtual std::shared_ptr<GaussianFactor>
   linearize(const Values& c) const = 0;
 
   /**
@@ -150,7 +150,7 @@ public:
    *
    * By default, throws exception if subclass does not implement the function.
    */
-  virtual shared_ptr clone() const {
+  GTSAM_EXPORT virtual shared_ptr clone() const {
     // TODO: choose better exception to throw here
     throw std::runtime_error("NonlinearFactor::clone(): Attempting to clone factor with no clone() implemented!");
     return shared_ptr();
@@ -161,19 +161,19 @@ public:
    * factor with different keys using
    * a map from old->new keys
    */
-  virtual shared_ptr rekey(const std::map<Key,Key>& rekey_mapping) const;
+  GTSAM_EXPORT virtual shared_ptr rekey(const std::map<Key,Key>& rekey_mapping) const;
 
   /**
    * Clones a factor and fully replaces its keys
    * @param new_keys is the full replacement set of keys
    */
-  virtual shared_ptr rekey(const KeyVector& new_keys) const;
+  GTSAM_EXPORT virtual shared_ptr rekey(const KeyVector& new_keys) const;
 
   /**
    * Should the factor be evaluated in the same thread as the caller
    * This is to enable factors that has shared states (like the Python GIL lock)
    */
-   virtual bool sendable() const {
+   GTSAM_EXPORT virtual bool sendable() const {
     return true;
   }
 

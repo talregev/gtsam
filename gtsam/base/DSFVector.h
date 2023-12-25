@@ -35,7 +35,7 @@ namespace gtsam {
  * Uses rank compression but not union by rank :-(
  * @ingroup base
  */
-class GTSAM_EXPORT DSFBase {
+class DSFBase {
 
 public:
   typedef std::vector<size_t> V; ///< Vector of ints
@@ -45,50 +45,50 @@ private:
 
 public:
   /// Constructor that allocates new memory, allows for keys 0...numNodes-1.
-  DSFBase(const size_t numNodes);
+  GTSAM_EXPORT DSFBase(const size_t numNodes);
 
   /// Constructor that uses an existing, pre-allocated vector.
-  DSFBase(const std::shared_ptr<V>& v_in);
+  GTSAM_EXPORT DSFBase(const std::shared_ptr<V>& v_in);
 
   /// Find the label of the set in which {key} lives.
-  size_t find(size_t key) const;
+  GTSAM_EXPORT size_t find(size_t key) const;
 
   /// Merge the sets containing i1 and i2. Does nothing if i1 and i2 are already in the same set.
-  void merge(const size_t& i1, const size_t& i2);
+  GTSAM_EXPORT void merge(const size_t& i1, const size_t& i2);
 };
 
 /**
  * DSFVector additionally keeps a vector of keys to support more expensive operations
  * @ingroup base
  */
-class GTSAM_EXPORT DSFVector: public DSFBase {
+class DSFVector: public DSFBase {
 
 private:
   std::vector<size_t> keys_; ///< stores keys to support more expensive operations
 
 public:
   /// Constructor that allocates new memory, uses sequential keys 0...numNodes-1.
-  DSFVector(const size_t numNodes);
+  GTSAM_EXPORT DSFVector(const size_t numNodes);
 
   /// Constructor that allocates memory, uses given keys.
-  DSFVector(const std::vector<size_t>& keys);
+  GTSAM_EXPORT DSFVector(const std::vector<size_t>& keys);
 
   /// Constructor that uses existing vectors.
-  DSFVector(const std::shared_ptr<V>& v_in, const std::vector<size_t>& keys);
+  GTSAM_EXPORT DSFVector(const std::shared_ptr<V>& v_in, const std::vector<size_t>& keys);
 
   // All operations below loop over all keys and hence are *at least* O(n)
 
   /// Find whether there is one and only one occurrence for the given {label}.
-  bool isSingleton(const size_t& label) const;
+  GTSAM_EXPORT bool isSingleton(const size_t& label) const;
 
   /// Get the nodes in the tree with the given label
-  std::set<size_t> set(const size_t& label) const;
+  GTSAM_EXPORT std::set<size_t> set(const size_t& label) const;
 
   /// Return all sets, i.e. a partition of all elements.
-  std::map<size_t, std::set<size_t> > sets() const;
+  GTSAM_EXPORT std::map<size_t, std::set<size_t> > sets() const;
 
   /// Return all sets, i.e. a partition of all elements.
-  std::map<size_t, std::vector<size_t> > arrays() const;
+  GTSAM_EXPORT std::map<size_t, std::vector<size_t> > arrays() const;
 };
 
 }

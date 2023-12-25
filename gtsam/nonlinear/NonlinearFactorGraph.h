@@ -52,7 +52,7 @@ namespace gtsam {
    * an VectorValues in that linearized factor graph.
    * @addtogroup nonlinear
    */
-  class GTSAM_EXPORT NonlinearFactorGraph: public FactorGraph<NonlinearFactor> {
+  class NonlinearFactorGraph: public FactorGraph<NonlinearFactor> {
 
   public:
 
@@ -64,7 +64,7 @@ namespace gtsam {
     /// @{
 
     /** Default constructor */
-    NonlinearFactorGraph() {}
+    GTSAM_EXPORT NonlinearFactorGraph() {}
 
     /** Construct from iterator over factors */
     template<typename ITERATOR>
@@ -83,38 +83,38 @@ namespace gtsam {
     /// @{
 
     /** print */
-    void print(
+    GTSAM_EXPORT void print(
         const std::string& str = "NonlinearFactorGraph: ",
         const KeyFormatter& keyFormatter = DefaultKeyFormatter) const override;
 
     /** print errors along with factors*/
-    void printErrors(const Values& values, const std::string& str = "NonlinearFactorGraph: ",
+    GTSAM_EXPORT void printErrors(const Values& values, const std::string& str = "NonlinearFactorGraph: ",
       const KeyFormatter& keyFormatter = DefaultKeyFormatter,
       const std::function<bool(const Factor* /*factor*/, double /*whitenedError*/, size_t /*index*/)>&
         printCondition = [](const Factor *,double, size_t) {return true;}) const;
 
     /** Test equality */
-    bool equals(const NonlinearFactorGraph& other, double tol = 1e-9) const;
+    GTSAM_EXPORT bool equals(const NonlinearFactorGraph& other, double tol = 1e-9) const;
 
     /// @}
     /// @name Standard Interface
     /// @{
 
     /** unnormalized error, \f$ \sum_i 0.5 (h_i(X_i)-z)^2 / \sigma^2 \f$ in the most common case */
-    double error(const Values& values) const;
+    GTSAM_EXPORT double error(const Values& values) const;
 
     /** Unnormalized probability. O(n) */
-    double probPrime(const Values& values) const;
+    GTSAM_EXPORT double probPrime(const Values& values) const;
 
     /**
      * Create a symbolic factor graph
      */
-    std::shared_ptr<SymbolicFactorGraph> symbolic() const;
+    GTSAM_EXPORT std::shared_ptr<SymbolicFactorGraph> symbolic() const;
 
     /**
      * Compute a fill-reducing ordering using COLAMD.
      */
-    Ordering orderingCOLAMD() const;
+    GTSAM_EXPORT Ordering orderingCOLAMD() const;
 
     /**
      * Compute a fill-reducing ordering with constraints using CCOLAMD
@@ -124,10 +124,10 @@ namespace gtsam {
      * indices need to appear in the constraints, unconstrained is assumed for all
      * other variables
      */
-    Ordering orderingCOLAMDConstrained(const FastMap<Key, int>& constraints) const;
+    GTSAM_EXPORT Ordering orderingCOLAMDConstrained(const FastMap<Key, int>& constraints) const;
 
     /// Linearize a nonlinear factor graph
-    std::shared_ptr<GaussianFactorGraph> linearize(const Values& linearizationPoint) const;
+    GTSAM_EXPORT std::shared_ptr<GaussianFactorGraph> linearize(const Values& linearizationPoint) const;
 
     /// typdef for dampen functions used below
     using Dampen = std::function<void(const std::shared_ptr<HessianFactor>& hessianFactor)>;
@@ -139,7 +139,7 @@ namespace gtsam {
      * An optional lambda function can be used to apply damping on the filled Hessian.
      * No parallelism is exploited, because all the factors write in the same memory.
      */
-    std::shared_ptr<HessianFactor> linearizeToHessianFactor(
+    GTSAM_EXPORT std::shared_ptr<HessianFactor> linearizeToHessianFactor(
         const Values& values, const Dampen& dampen = nullptr) const;
 
     /**
@@ -150,21 +150,21 @@ namespace gtsam {
      * An optional lambda function can be used to apply damping on the filled Hessian.
      * No parallelism is exploited, because all the factors write in the same memory.
      */
-    std::shared_ptr<HessianFactor> linearizeToHessianFactor(
+    GTSAM_EXPORT std::shared_ptr<HessianFactor> linearizeToHessianFactor(
         const Values& values, const Ordering& ordering, const Dampen& dampen = nullptr) const;
 
     /// Linearize and solve in one pass.
     /// Calls linearizeToHessianFactor, densely solves the normal equations, and updates the values.
-    Values updateCholesky(const Values& values,
+    GTSAM_EXPORT Values updateCholesky(const Values& values,
                           const Dampen& dampen = nullptr) const;
 
     /// Linearize and solve in one pass.
     /// Calls linearizeToHessianFactor, densely solves the normal equations, and updates the values.
-    Values updateCholesky(const Values& values, const Ordering& ordering,
+    GTSAM_EXPORT Values updateCholesky(const Values& values, const Ordering& ordering,
                           const Dampen& dampen = nullptr) const;
 
     /// Clone() performs a deep-copy of the graph, including all of the factors
-    NonlinearFactorGraph clone() const;
+    GTSAM_EXPORT NonlinearFactorGraph clone() const;
 
     /**
      * Rekey() performs a deep-copy of all of the factors, and changes
@@ -175,7 +175,7 @@ namespace gtsam {
      * @param rekey_mapping is a map of old->new keys
      * @result a cloned graph with updated keys
      */
-    NonlinearFactorGraph rekey(const std::map<Key,Key>& rekey_mapping) const;
+    GTSAM_EXPORT NonlinearFactorGraph rekey(const std::map<Key,Key>& rekey_mapping) const;
 
     /**
      * Directly add ExpressionFactor that implements |h(x)-z|^2_R
@@ -224,18 +224,18 @@ namespace gtsam {
     using FactorGraph::saveGraph;
 
     /// Output to graphviz format, stream version, with Values/extra options.
-    void dot(std::ostream& os, const Values& values,
+    GTSAM_EXPORT void dot(std::ostream& os, const Values& values,
              const KeyFormatter& keyFormatter = DefaultKeyFormatter,
              const GraphvizFormatting& writer = GraphvizFormatting()) const;
 
     /// Output to graphviz format string, with Values/extra options.
-    std::string dot(
+    GTSAM_EXPORT std::string dot(
         const Values& values,
         const KeyFormatter& keyFormatter = DefaultKeyFormatter,
         const GraphvizFormatting& writer = GraphvizFormatting()) const;
 
     /// output to file with graphviz format, with Values/extra options.
-    void saveGraph(
+    GTSAM_EXPORT void saveGraph(
         const std::string& filename, const Values& values,
         const KeyFormatter& keyFormatter = DefaultKeyFormatter,
         const GraphvizFormatting& writer = GraphvizFormatting()) const;

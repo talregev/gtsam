@@ -43,7 +43,7 @@ namespace gtsam {
  * Note that N here, the number of points, is one less than N from
  * 'Approximation Theory and Approximation Practice by L. N. Trefethen (pg.42)'.
  */
-class GTSAM_EXPORT Chebyshev2 : public Basis<Chebyshev2> {
+class Chebyshev2 : public Basis<Chebyshev2> {
  public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
@@ -61,7 +61,7 @@ class GTSAM_EXPORT Chebyshev2 : public Basis<Chebyshev2> {
    * @param b Upper bound of interval (default: 1)
    * @return double
    */
-  static double Point(size_t N, int j, double a = -1, double b = 1) {
+  GTSAM_EXPORT static double Point(size_t N, int j, double a = -1, double b = 1) {
     assert(j >= 0 && size_t(j) < N);
     const double dtheta = M_PI / (N > 1 ? (N - 1) : 1);
     // We add -PI so that we get values ordered from -1 to +1
@@ -70,7 +70,7 @@ class GTSAM_EXPORT Chebyshev2 : public Basis<Chebyshev2> {
   }
 
   /// All Chebyshev points
-  static Vector Points(size_t N) {
+  GTSAM_EXPORT static Vector Points(size_t N) {
     Vector points(N);
     for (size_t j = 0; j < N; j++) {
       points(j) = Point(N, j);
@@ -79,7 +79,7 @@ class GTSAM_EXPORT Chebyshev2 : public Basis<Chebyshev2> {
   }
 
   /// All Chebyshev points, within [a,b] interval
-  static Vector Points(size_t N, double a, double b) {
+  GTSAM_EXPORT static Vector Points(size_t N, double a, double b) {
     Vector points = Points(N);
     const double T1 = (a + b) / 2, T2 = (b - a) / 2;
     points = T1 + (T2 * points).array();
@@ -94,21 +94,21 @@ class GTSAM_EXPORT Chebyshev2 : public Basis<Chebyshev2> {
    * obtain a linear map from parameter vectors f to interpolated values f(x).
    * Optional [a,b] interval can be specified as well.
    */
-  static Weights CalculateWeights(size_t N, double x, double a = -1,
+  GTSAM_EXPORT static Weights CalculateWeights(size_t N, double x, double a = -1,
                                   double b = 1);
 
   /**
    *  Evaluate derivative of barycentric weights.
    *  This is easy and efficient via the DifferentiationMatrix.
    */
-  static Weights DerivativeWeights(size_t N, double x, double a = -1,
+  GTSAM_EXPORT static Weights DerivativeWeights(size_t N, double x, double a = -1,
                                    double b = 1);
 
   /// compute D = differentiation matrix, Trefethen00book p.53
   /// when given a parameter vector f of function values at the Chebyshev
   /// points, D*f are the values of f'.
   /// https://people.maths.ox.ac.uk/trefethen/8all.pdf Theorem 8.4
-  static DiffMatrix DifferentiationMatrix(size_t N, double a = -1,
+  GTSAM_EXPORT static DiffMatrix DifferentiationMatrix(size_t N, double a = -1,
                                           double b = 1);
 
   /**
@@ -129,7 +129,7 @@ class GTSAM_EXPORT Chebyshev2 : public Basis<Chebyshev2> {
       w(ii) = 2*v/K;
 
    */
-  static Weights IntegrationWeights(size_t N, double a = -1, double b = 1);
+  GTSAM_EXPORT static Weights IntegrationWeights(size_t N, double a = -1, double b = 1);
 
   /**
    * Create matrix of values at Chebyshev points given vector-valued function.

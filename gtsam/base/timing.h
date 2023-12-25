@@ -211,22 +211,22 @@ namespace gtsam {
     /**
      * Small class that calls internal::tic at construction, and internol::toc when destroyed
      */
-    class GTSAM_EXPORT AutoTicToc {
+    class AutoTicToc {
      private:
       size_t id_;
       const char* label_;
       bool isSet_;
 
      public:
-      AutoTicToc(size_t id, const char* label)
+      GTSAM_EXPORT AutoTicToc(size_t id, const char* label)
           : id_(id), label_(label), isSet_(true) {
         tic(id_, label_);
       }
-      void stop() {
+      GTSAM_EXPORT void stop() {
         toc(id_, label_);
         isSet_ = false;
       }
-      ~AutoTicToc() {
+      GTSAM_EXPORT ~AutoTicToc() {
         if (isSet_) stop();
       }
     };
