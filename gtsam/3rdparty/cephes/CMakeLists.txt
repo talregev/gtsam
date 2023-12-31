@@ -107,7 +107,9 @@ if(WIN32)
     cephes-gtsam
     PROPERTIES PREFIX ""
                COMPILE_FLAGS /w
-               RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/../../../bin")
+               RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/../../../bin"
+               INSTALL_NAME_DIR "${CMAKE_INSTALL_PREFIX}/lib"
+  )
 endif()
 
 if(APPLE)

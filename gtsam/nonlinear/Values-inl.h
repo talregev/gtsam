@@ -197,6 +197,7 @@ namespace gtsam {
      }
    };
 
+#ifdef _WIN32
    // Handle dynamic matrices
    template <int M, int N>
    struct handle_matrix<Eigen::Matrix<double, M, N, 0, M, N>, true> {
@@ -247,6 +248,7 @@ namespace gtsam {
                             (M == Eigen::Dynamic || N == Eigen::Dynamic)>()(j, pointer);
      }
    };
+#endif // #ifdef _WIN32
 
    }  // internal
 
