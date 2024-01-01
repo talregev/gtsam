@@ -21,11 +21,11 @@ jobs:
       matrix:
         include:      
         - type: x64
-          BUILD_DIR: gtsam\3rdparty\vcpkg\cache
-          VCPKG_ROOT: gtsam\3rdparty\vcpkg\cache\vcpkg
+          BUILD_DIR: gtsam/3rdparty/vcpkg/cache
+          VCPKG_ROOT: gtsam/3rdparty/vcpkg/cache/vcpkg
           VCPKG_LINK: https://github.com/microsoft/vcpkg/
-          VCPKG_CONFIGS: gtsam\3rdparty\vcpkg
-          BINARY_CACHE: gtsam\3rdparty\vcpkg\cache\windows
+          VCPKG_CONFIGS: gtsam/3rdparty/vcpkg
+          BINARY_CACHE: gtsam/3rdparty/vcpkg/cache/windows
     env:
       BUILD_DIR: ${{ matrix.BUILD_DIR }}
       VCPKG_ROOT: ${{ matrix.VCPKG_ROOT }}
@@ -48,6 +48,12 @@ jobs:
         uses: ilammy/msvc-dev-cmd@v1
         with:
           arch: x64
+          toolset: "29"
+
+      - name: cl version
+        shell: cmd
+        run: |
+          cl
 
       - uses: actions/setup-python@v4
         with:
@@ -57,15 +63,9 @@ jobs:
         if: success()
         shell: cmd
         run: |
-          :: choco install python311
-          :: where python3.11.exe
-          :: dir c:\python311
-          :: C:\ProgramData\Chocolatey\bin\python3.11.exe -m pip --version
-          :: C:\ProgramData\chocolatey\bin\python3.11.exe -m pip install pyparsing
           python --version
           python -m pip --version
           python -m pip install -r python/dev_requirements.txt
-
 
       - name: Install ninja
         if: success()
@@ -75,41 +75,38 @@ jobs:
           ninja --version
           where ninja
 
-      - name: Fix vcpkg
-        run: vcpkg.exe integrate remove
-
       - name: Init vcpkg
         if: success()
-        shell: cmd
+        shell: bash
         run: |
-          mkdir -p %BUILD_DIR%
-          git -C %BUILD_DIR% clone %VCPKG_LINK%
+          mkdir -p $BUILD_DIR
+          git -C $BUILD_DIR clone $VCPKG_LINK
 
       - name: Vcpkg build & cmake config
         if: success()
-        shell: cmd
+        shell: bash
         run: |
-          set VCPKG_ROOT=${{ matrix.VCPKG_ROOT }}
-          set VCPKG_BINARY_SOURCES=clear;files,%CD%\%BINARY_CACHE%,readwrite;
-          mkdir %BINARY_CACHE%
-          set CMAKE_GENERATOR=Ninja
-          set CL=-openmp:experimental
-          cmake . -B build ^
-              -DCMAKE_TOOLCHAIN_FILE=%VCPKG_ROOT%\scripts\buildsystems\vcpkg.cmake ^
-              -DVCPKG_MANIFEST_DIR=%VCPKG_CONFIGS%\manifest ^
-              -DVCPKG_INSTALLED_DIR=%VCPKG_ROOT%\installed ^
-              -DVCPKG_OVERLAY_TRIPLETS=%VCPKG_CONFIGS%\triplets ^
-              -DVCPKG_TARGET_TRIPLET=x64-windows-release ^
-              -DVCPKG_INSTALL_OPTIONS=--clean-after-build ^
-              -DCMAKE_BUILD_TYPE=Release ^
-              -DGTSAM_BUILD_EXAMPLES_ALWAYS=OFF ^
-              -DGTSAM_ROT3_EXPMAP=ON ^
-              -DGTSAM_POSE3_EXPMAP=ON ^
-              -DGTSAM_BUILD_PYTHON=ON ^
-              -DGTSAM_BUILD_TESTS=OFF ^
-              -DGTSAM_BUILD_UNSTABLE=OFF ^
-              -DGTSAM_USE_SYSTEM_EIGEN=ON ^
-              -DGTSAM_USE_SYSTEM_METIS=ON ^
+          export VCPKG_ROOT=${{ matrix.VCPKG_ROOT }}
+          export VCPKG_BINARY_SOURCES="clear;files,${GITHUB_WORKSPACE}/${BINARY_CACHE},readwrite;"
+          mkdir -p $BINARY_CACHE
+          export CMAKE_GENERATOR=Ninja
+          export CL=-openmp:experimental
+          cmake . -B build \
+              -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake \
+              -DVCPKG_MANIFEST_DIR=$VCPKG_CONFIGS/manifest \
+              -DVCPKG_INSTALLED_DIR=$VCPKG_ROOT/installed \
+              -DVCPKG_OVERLAY_TRIPLETS=$VCPKG_CONFIGS/triplets \
+              -DVCPKG_TARGET_TRIPLET=x64-windows-release \
+              -DVCPKG_INSTALL_OPTIONS=--clean-after-build \
+              -DCMAKE_BUILD_TYPE=Release \
+              -DGTSAM_BUILD_EXAMPLES_ALWAYS=ON \
+              -DGTSAM_ROT3_EXPMAP=ON \
+              -DGTSAM_POSE3_EXPMAP=ON \
+              -DGTSAM_BUILD_PYTHON=ON \
+              -DGTSAM_BUILD_TESTS=ON \
+              -DGTSAM_BUILD_UNSTABLE=OFF \
+              -DGTSAM_USE_SYSTEM_EIGEN=ON \
+              -DGTSAM_USE_SYSTEM_METIS=ON \
               -DGTSAM_SUPPORT_NESTED_DISSECTION=ON
 
       - name: Save cache dependencies
@@ -121,22 +118,18 @@ jobs:
           key: windows-${{ hashFiles('.github/workflows/windows.yml') }}-${{ hashFiles('gtsam\3rdparty\vcpkg\cache\vcpkg\installed\vcpkg\updates\*') }}
 
       - name: Cmake build
-        if: success()
-        shell: cmd
+        shell: bash
         run: |
           cmake --build build --config Release -j 2
 
       - name: Run Python tests
-        if: success() 
-        shell: cmd
+        shell: bash
         run: |
           cmake --build build --target python-install
-          dir/w build\python\gtsam\
           cmake --build build --target python-test
 
       - name: Run tests
-        if: success() 
-        shell: cmd
+        shell: bash
         run: |
-          :: metis test are failing. remove this comment when fix it.
-          :: cmake --build build --target check -j 1
+          # metis test are failing. remove this comment when fix it.
+          # cmake --build build --target check -j 1
