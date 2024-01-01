@@ -133,6 +133,19 @@ if(WIN32)
         COMMAND_EXPAND_LISTS
         VERBATIM              
     )
+
+    if(DEFINED VCPKG_INSTALLED_DIR)
+        list(GET CMAKE_FIND_ROOT_PATH 0 VCPKG_BINARIES)
+        file(GLOB VCPKG_BINARIES "${VCPKG_BINARIES}/bin/*.dll")
+        message(STATUS "VCPKG_BINARIES: ${VCPKG_BINARIES}")
+        ADD_CUSTOM_COMMAND(TARGET ${GTSAM_PYTHON_TARGET} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${VCPKG_BINARIES}"
+            "${GTSAM_PYTHON_BUILD_DIRECTORY}/gtsam/"   
+            COMMAND_EXPAND_LISTS
+            VERBATIM              
+        )
+    endif()
 endif()
 
 # Set the path for the GTSAM python module
@@ -244,6 +257,18 @@ if(GTSAM_UNSTABLE_BUILD_PYTHON)
             COMMAND_EXPAND_LISTS
             VERBATIM            
         )
+        if(DEFINED VCPKG_INSTALLED_DIR)
+            list(GET CMAKE_FIND_ROOT_PATH 0 VCPKG_BINARIES)
+            file(GLOB VCPKG_BINARIES "${VCPKG_BINARIES}/bin/*.dll")
+            message(STATUS "VCPKG_BINARIES: ${VCPKG_BINARIES}")
+            ADD_CUSTOM_COMMAND(TARGET ${GTSAM_PYTHON_UNSTABLE_TARGET} POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "${VCPKG_BINARIES}"
+                "${GTSAM_PYTHON_BUILD_DIRECTORY}/gtsam_unstable/"   
+                COMMAND_EXPAND_LISTS
+                VERBATIM              
+            )
+        endif()
     endif()
     # Custom make command to run all GTSAM_UNSTABLE Python tests
     add_custom_target(
