@@ -6,10 +6,11 @@
 #  GeographicLib_LIBRARIES = /usr/local/lib/libGeographic.so
 #  GeographicLib_LIBRARY_DIRS = /usr/local/lib
 
-find_package(GeographicLib CONFIG)
-if(NOT GeographicLib_FOUND)
-  find_library (GeographicLib_LIBRARIES Geographic
-    PATHS "${CMAKE_INSTALL_PREFIX}/../GeographicLib/lib")
+if(DEFINED VCPKG_INSTALLED_DIR)
+  find_package(GeographicLib CONFIG)
+else()
+find_library (GeographicLib_LIBRARIES Geographic
+  PATHS "${CMAKE_INSTALL_PREFIX}/../GeographicLib/lib")
 endif()
 
 if (GeographicLib_LIBRARIES)
@@ -35,9 +36,11 @@ if (GeographicLib_LIBRARIES)
   unset (_ROOT_DIR)
 endif ()
 
-# include (FindPackageHandleStandardArgs)
-# find_package_handle_standard_args (GeographicLib DEFAULT_MSG
-#   GeographicLib_LIBRARY_DIRS GeographicLib_LIBRARIES
-#   GeographicLib_INCLUDE_DIRS)
+if(NOT DEFINED VCPKG_INSTALLED_DIR)
+include (FindPackageHandleStandardArgs)
+find_package_handle_standard_args (GeographicLib DEFAULT_MSG
+  GeographicLib_LIBRARY_DIRS GeographicLib_LIBRARIES
+  GeographicLib_INCLUDE_DIRS)
+endif()
 mark_as_advanced (GeographicLib_LIBRARY_DIRS GeographicLib_LIBRARIES
   GeographicLib_INCLUDE_DIRS)

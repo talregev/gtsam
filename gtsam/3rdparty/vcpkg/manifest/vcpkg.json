@@ -22,9 +22,6 @@
     "tbb",
     "pybind11",
     "geographiclib",
-    {
-      "name":"intel-mkl",
-      "platform": "!windows"
-    }
+    "intel-mkl"
   ]
 }
