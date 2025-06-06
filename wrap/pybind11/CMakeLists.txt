@@ -100,7 +100,11 @@ if(CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
 else()
   set(PYBIND11_MASTER_PROJECT OFF)
   set(pybind11_system SYSTEM)
-  set(_pybind11_findpython_default OFF)
+  if(CMAKE_VERSION VERSION_LESS "3.18")
+    set(_pybind11_findpython_default OFF)
+  else()
+    set(_pybind11_findpython_default ON)
+  endif()
 endif()
 
 # Options
