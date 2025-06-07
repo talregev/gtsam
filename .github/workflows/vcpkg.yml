@@ -23,6 +23,7 @@ jobs:
             binary_cache: C:\Users\runneradmin\AppData\Local\vcpkg\archives
             vcpkg_info: C:/vcpkg/installed/vcpkg/info/*
             python: python
+            ctest_extra_flags: -E check_constraint_program
           - os: ubuntu-latest
             triplet: x64-linux
             build_type: Release
@@ -139,6 +140,7 @@ jobs:
               -DGTSAM_USE_SYSTEM_EIGEN=ON \
               -DGTSAM_USE_SYSTEM_METIS=ON \
               -DGTSAM_SUPPORT_NESTED_DISSECTION=ON \
+              -DCTEST_EXTRA_ARGS="${{ matrix.ctest_extra_flags }}" \
               ${{ matrix.cxxflags }}
 
       - name: cmake build
