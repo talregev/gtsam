@@ -17,17 +17,17 @@ jobs:
       matrix:
         include:      
           - os: windows-latest
-            triplet: x64-windows-release
+            triplet: x64-windows
             build_type: Release
             test_target: RUN_TESTS
             binary_cache: C:\Users\runneradmin\AppData\Local\vcpkg\archives
             python: python
             # check_constraint_program fail on windows. should fix it for windows.
             # Remove this excluded test when you fix it for windows.
-            ctest_extra_flags: -E "check_constraint_program|check_inference_program|check_symbolic_program|check_discrete_program"
+            # ctest_extra_flags: -E "check_constraint_program|check_inference_program|check_symbolic_program|check_discrete_program"
             # Exclude test_sumProduct and test_sumProduct_chain from pytest on windows.
             # These tests should be fixed for windows.
-            pytest_extra_flags: -k "not test_sumProduct"
+            # pytest_extra_flags: -k "not test_sumProduct"
           - os: ubuntu-latest
             triplet: x64-linux-release
             build_type: Release
@@ -57,7 +57,6 @@ jobs:
         uses: ilammy/msvc-dev-cmd@v1
         with:
           arch: x64
-          toolset: 14.40
 
       - name: cl version
         if: runner.os == 'Windows'
@@ -75,6 +74,11 @@ jobs:
         shell: bash
         run: |
           brew install autoconf automake autoconf-archive
+
+      - name: "Take the latest vcpkg"
+        shell: bash
+        run: |
+          git -C $VCPKG_INSTALLATION_ROOT pull
 
       - name: "Install dependencies"
         run: >
@@ -128,8 +132,6 @@ jobs:
         if: success()
         shell: bash
         run: |
-          export CL=-openmp
-
           # This is due an error in linux:
           # error: argument 2 null where non-null expected [-Werror=nonnull]
           # return __builtin_memcmp(__first1, __first2, sizeof(_Tp) * __num);
@@ -167,6 +169,7 @@ jobs:
           cmake --build build --target python-test
 
       - name: Run tests
+        if: always()
         shell: bash
         run: |
           cmake --build build --target check
