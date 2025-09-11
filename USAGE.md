@@ -5,7 +5,7 @@ This file explains how to make use of the library for common SLAM tasks, using a
 ## Getting Started
 
 ### Install
-	
+
 Follow the installation instructions in the README file to build and install gtsam, as well as running tests to ensure the library is working properly.
 
 ### Compiling/Linking with GTSAM
