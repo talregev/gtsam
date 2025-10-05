@@ -6,6 +6,8 @@ project(
   VERSION 1.0.0
   LANGUAGES C)
 
+configure_file("dllexport.h.in" "dllexport.h")
+
 set(CEPHES_HEADER_FILES
     cephes.h
     cephes/dd_idefs.h
