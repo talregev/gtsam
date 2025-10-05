@@ -3,8 +3,40 @@
 
 #include "dllexport.h"
 
+#if defined(_MSC_VER) && defined(CEPHES_BUILD)
+#  define cbrt  cephes_cbrt
+#  define exp2  cephes_exp2
+#  define j0    cephes_j0
+#  define j1    cephes_j1
+#  define jn    cephes_jn
+#  define y0    cephes_y0
+#  define y1    cephes_y1
+#  define yn    cephes_yn
+#  define erf   cephes_erf
+#  define erfc  cephes_erfc
+#  define round cephes_round
+#  define log1p cephes_log1p
+#  define expm1 cephes_expm1
+#endif
+
 #ifdef __cplusplus
 extern "C" {
+#endif
+
+#if !defined(_MSC_VER) || defined(CEPHES_BUILD)
+CEPHES_EXPORT double exp2(double);
+CEPHES_EXPORT double erf(double);
+CEPHES_EXPORT double erfc(double);
+CEPHES_EXPORT double round(double);
+CEPHES_EXPORT double log1p(double);
+CEPHES_EXPORT double expm1(double);
+CEPHES_EXPORT double cbrt(double);
+CEPHES_EXPORT double j0(double);
+CEPHES_EXPORT double j1(double);
+CEPHES_EXPORT double jn(int, double);
+CEPHES_EXPORT double y0(double);
+CEPHES_EXPORT double y1(double);
+CEPHES_EXPORT double yn(int, double);
 #endif
 
 CEPHES_EXTERN_EXPORT int airy(double x, double *ai, double *aip, double *bi,

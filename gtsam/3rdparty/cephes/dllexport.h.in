@@ -17,22 +17,6 @@
 #  if !GTSAM_SHARED_LIB
 #    define CEPHES_EXPORT
 #    define CEPHES_EXTERN_EXPORT extern
-#    if defined(_MSC_VER)
-       /* Avoid conflict with the CRT's cbrt */
-#      define cbrt cephes_cbrt
-#      define exp2 cephes_exp2
-#      define j0   cephes_j0
-#      define j1   cephes_j1
-#      define jn   cephes_jn
-#      define y0   cephes_y0
-#      define y1   cephes_y1
-#      define yn   cephes_yn
-#      define erf  cephes_erf
-#      define erfc cephes_erfc
-#      define round cephes_round
-#      define log1p cephes_log1p
-#      define expm1 cephes_expm1
-#    endif
 #  else
 #    define CEPHES_EXPORT __declspec(dllimport)
 #    define CEPHES_EXTERN_EXPORT __declspec(dllimport)

@@ -101,6 +101,8 @@ target_include_directories(
                              $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
 )
 
+target_compile_definitions(cephes-gtsam PRIVATE CEPHES_BUILD)
+
 set_target_properties(
   cephes-gtsam
   PROPERTIES VERSION ${PROJECT_VERSION}
